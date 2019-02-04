@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import readinglist.repository.ReaderRepository;
 
-@EnableWebSecurity
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -21,12 +21,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").access("hasRole('READER')")
-                .antMatchers("/**").permitAll()
+                    .antMatchers("/").access("hasRole('READER')")
+                    .antMatchers("/**").permitAll()
+
                 .and()
+
                 .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true");
+                    .loginPage("/login")
+                    .failureUrl("/login?error=true");
     }
 
     @Override
