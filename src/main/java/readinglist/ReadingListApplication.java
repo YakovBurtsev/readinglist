@@ -6,14 +6,10 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
-public class ReadingListApplication extends WebMvcConfigurerAdapter {
+public class ReadingListApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ReadingListApplication.class, args);
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-    }
 }
