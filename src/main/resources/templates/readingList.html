@@ -6,7 +6,11 @@
 </head>
 
 <body>
-<h2>Your Reading List</h2>
+<form method="POST" th:action="@{/logout}">
+    <input type="submit" value="Logout"/>
+</form>
+
+<h2>Reading List</h2>
 <div th:unless="${#lists.isEmpty(books)}">
     <dl th:each="book : ${books}">
         <dt class="bookHeadline">
