@@ -1,1 +1,1 @@
-insert into Reader (username, password, fullname) values ('yakov', 'password', 'Yakov Burtsev');
+insert into Reader (username, password, fullname) values ('yakov', 'yakov', 'Yakov Burtsev');

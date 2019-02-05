@@ -71,4 +71,12 @@ public class Reader implements UserDetails {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Reader{" +
+                "username='" + username + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
