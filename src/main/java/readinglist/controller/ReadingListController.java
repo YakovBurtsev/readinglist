@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import readinglist.config.AmazonProperties;
 import readinglist.model.Book;
 import readinglist.model.Reader;
 import readinglist.repository.ReadingListRepository;
@@ -15,8 +16,14 @@ import java.util.List;
 @RequestMapping("/")
 public class ReadingListController {
 
-    @Autowired
     private ReadingListRepository readingListRepository;
+    private AmazonProperties amazonProperties;
+
+    @Autowired
+    public ReadingListController(ReadingListRepository readingListRepository, AmazonProperties amazonProperties) {
+        this.readingListRepository = readingListRepository;
+        this.amazonProperties = amazonProperties;
+    }
 
     @RequestMapping(method = RequestMethod.GET)
     public String readersBooks(Reader reader, Model model) {
@@ -24,6 +31,7 @@ public class ReadingListController {
         if (readingList != null) {
             model.addAttribute("books", readingList);
             model.addAttribute("reader", reader);
+            model.addAttribute("amazonID", amazonProperties.getAssociateId());
         }
         return "readingList";
     }

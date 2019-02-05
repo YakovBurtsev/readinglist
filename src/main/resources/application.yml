@@ -1,0 +1,6 @@
+amazon:
+  associate_id: habuma-20
+
+spring:
+  thymeleaf:
+    cache: false
