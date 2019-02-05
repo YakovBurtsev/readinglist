@@ -1,10 +1,13 @@
 package readinglist.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import readinglist.config.AmazonProperties;
 import readinglist.model.Book;
 import readinglist.model.Reader;
@@ -42,5 +45,17 @@ public class ReadingListController {
         readingListRepository.save(book);
         return "redirect:/";
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/fail")
+    public void fail() {
+        throw new RuntimeException();
+    }
+
+    @ExceptionHandler(value = RuntimeException.class)
+    @ResponseStatus(value = HttpStatus.BANDWIDTH_LIMIT_EXCEEDED)
+    public String error() {
+        return "error";
+    }
+
 
 }
