@@ -20,8 +20,7 @@ public class ReadingListController {
     private ReadingListRepository readingListRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public String readersBooks(UsernamePasswordAuthenticationToken authenticationToken, Model model) {
-        Reader reader = (Reader) authenticationToken.getPrincipal();
+    public String readersBooks(Reader reader, Model model) {
         List<Book> readingList = readingListRepository.findByReader(reader);
         if (readingList != null) {
             model.addAttribute("books", readingList);
@@ -31,8 +30,7 @@ public class ReadingListController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String addToReadingList(UsernamePasswordAuthenticationToken authenticationToken, Book book) {
-        Reader reader = (Reader) authenticationToken.getPrincipal();
+    public String addToReadingList(Reader reader, Book book) {
         book.setReader(reader);
         readingListRepository.save(book);
         return "redirect:/";
