@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Objects;
 
 @Entity
 public class Reader implements UserDetails {
@@ -69,6 +70,21 @@ public class Reader implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reader reader = (Reader) o;
+        return Objects.equals(username, reader.username) &&
+                Objects.equals(fullname, reader.fullname) &&
+                Objects.equals(password, reader.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, fullname, password);
     }
 
     @Override
