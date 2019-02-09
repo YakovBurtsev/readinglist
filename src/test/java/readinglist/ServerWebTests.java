@@ -27,7 +27,7 @@ public class ServerWebTests {
 
     @BeforeClass
     public static void openBrowser() {
-        //todo: change to correct driver path
+        //todo: change to correct driver path. You can download it from http://chromedriver.chromium.org/downloads
         System.setProperty("webdriver.chrome.driver", "/home/burtsev/Downloads/chromedriver");
         browser = new ChromeDriver();
         browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
