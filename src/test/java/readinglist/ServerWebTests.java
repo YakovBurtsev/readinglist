@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
@@ -20,15 +20,17 @@ import static org.junit.Assert.assertEquals;
 @WebIntegrationTest(randomPort = true)
 public class ServerWebTests {
 
-    private static FirefoxDriver browser;
+    private static ChromeDriver browser;
 
     @Value("${local.server.port}")
     private int port;
 
     @BeforeClass
     public static void openBrowser() {
-        browser = new FirefoxDriver();
-        browser.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        //todo: change to correct driver path
+        System.setProperty("webdriver.chrome.driver", "/home/burtsev/Downloads/chromedriver");
+        browser = new ChromeDriver();
+        browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
     @Test
@@ -36,9 +38,12 @@ public class ServerWebTests {
         String baseUrl = "http://localhost:" + port;
         browser.get(baseUrl);
 
-        String currentUrl = browser.getCurrentUrl();
-        assertEquals(baseUrl + "/", currentUrl);
+        assertEquals(baseUrl + "/login", browser.getCurrentUrl());
+        browser.findElementByName("username").sendKeys("yakov");
+        browser.findElementByName("password").sendKeys("yakov");
+        browser.findElementByTagName("form").submit();
 
+        assertEquals(baseUrl + "/", browser.getCurrentUrl());
         assertEquals("You have no books in your book list",
                 browser.findElementByTagName("div").getText());
 
@@ -46,7 +51,7 @@ public class ServerWebTests {
         browser.findElementByName("author").sendKeys("BOOK AUTHOR");
         browser.findElementByName("isbn").sendKeys("1234567890");
         browser.findElementByName("description").sendKeys("DESCRIPTION");
-        browser.findElementByTagName("form").submit();
+        browser.findElementById("add-book-form").submit();
 
         WebElement dl =
                 browser.findElementByCssSelector("dt.bookHeadline");
@@ -55,6 +60,9 @@ public class ServerWebTests {
         WebElement dt =
                 browser.findElementByCssSelector("dd.bookDescription");
         assertEquals("DESCRIPTION", dt.getText());
+
+        browser.findElementById("logout").submit();
+        assertEquals(baseUrl + "/login?logout", browser.getCurrentUrl());
     }
 
     @AfterClass
