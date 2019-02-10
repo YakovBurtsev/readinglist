@@ -4,3 +4,19 @@ amazon:
 spring:
   thymeleaf:
     cache: false
+
+liquibase:
+  change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+---
+spring:
+  profiles: production
+  datasource:
+    url: jdbc:postgresql://localhost:5432/readinglist
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
