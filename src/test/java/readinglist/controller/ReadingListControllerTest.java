@@ -1,14 +1,12 @@
 package readinglist.controller;
 
-import org.junit.After;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -17,7 +15,6 @@ import org.springframework.web.context.WebApplicationContext;
 import readinglist.ReadingListApplication;
 import readinglist.model.Book;
 import readinglist.model.Reader;
-import readinglist.repository.ReadingListRepository;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.http.MediaType.APPLICATION_FORM_URLENCODED;
@@ -37,9 +34,6 @@ public class ReadingListControllerTest {
     @Autowired
     private WebApplicationContext webContext;
 
-    @Autowired
-    private ReadingListRepository readingListRepository;
-
     private MockMvc mockMvc;
 
     @Before
@@ -48,8 +42,6 @@ public class ReadingListControllerTest {
                 .webAppContextSetup(webContext)
                 .apply(springSecurity())
                 .build();
-
-        readingListRepository.deleteAll();
     }
 
     @Test
@@ -60,6 +52,7 @@ public class ReadingListControllerTest {
                         "http://localhost/login"));
     }
 
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @WithUserDetails("yakov")
     @Test
     public void homePage_authenticatedUser() throws Exception {
@@ -76,6 +69,7 @@ public class ReadingListControllerTest {
                 .andExpect(model().attribute("books", is(empty())));
     }
 
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @WithUserDetails("yakov")
     @Test
     public void postBook() throws Exception {
