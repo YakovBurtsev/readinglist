@@ -14,7 +14,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: password
-                  type: varchar(25)
+                  type: varchar(100)
                   constraints:
                     nullable: false
               - column:
@@ -69,7 +69,7 @@ databaseChangeLog:
                 value: yakov
              - column:
                 name: password
-                value: yakov
+                value: $2a$10$3mMiJUC9RYW8vPXZqdltIevnYhieC9iGUhE.Xd1ClOoSkyR/6xsBi
              - column:
                 name: fullname
                 value: Yakov Burtsev

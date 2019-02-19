@@ -1,13 +1,9 @@
 amazon:
   associate_id: habuma-20
 
-liquibase:
-  change-log: classpath:/db/changelog/db.changelog-master.yaml
-
-management:
-  security:
-    enabled: false
-
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
 ---
 spring:
   profiles: production
