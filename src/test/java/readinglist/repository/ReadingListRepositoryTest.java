@@ -3,21 +3,16 @@ package readinglist.repository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
-import readinglist.ReadingListApplication;
 import readinglist.model.Book;
 import readinglist.model.Reader;
 
 import static org.junit.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(
-        classes = ReadingListApplication.class
-)
-@WebAppConfiguration
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ReadingListRepositoryTest {
 
     @Autowired
@@ -41,7 +36,7 @@ public class ReadingListRepositoryTest {
         book.setReader(reader);
         Book saved = repo.save(book);
 
-        Book found = repo.findOne(saved.getId());
+        Book found = repo.getOne(saved.getId());
         assertEquals(saved.getId(), found.getId());
         assertEquals("TITLE", found.getTitle());
         assertEquals("DESCRIPTION", found.getDescription());

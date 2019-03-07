@@ -5,17 +5,24 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import readinglist.repository.ReaderRepository;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final ReaderRepository readerRepository;
+
     @Autowired
-    private ReaderRepository readerRepository;
+    public SecurityConfig(ReaderRepository readerRepository) {
+        this.readerRepository = readerRepository;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -33,18 +40,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService());
+        auth
+                .userDetailsService(userDetailsService())
+                .passwordEncoder(passwordEncoder());
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> {
-            UserDetails userDetails = readerRepository.findOne(username);
-            if (userDetails != null) {
-                return userDetails;
-            }
-            throw new UsernameNotFoundException("User '" + username + "' not found.");
-        };
+        return username -> readerRepository.findById(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User '" + username + "' not found."));
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 }
