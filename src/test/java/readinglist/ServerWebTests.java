@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -18,17 +18,21 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ServerWebTests {
 
-    private static ChromeDriver browser;
+    private static HtmlUnitDriver browser;
 
     @Value("${local.server.port}")
     private int port;
 
     @BeforeClass
-    public static void openBrowser() {
-        //todo: change to correct driver path. You can download it from http://chromedriver.chromium.org/downloads
-        System.setProperty("webdriver.chrome.driver", "/home/burtsev/Downloads/chromedriver");
-        browser = new ChromeDriver();
-        browser.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+    public static void setup() {
+        browser = new HtmlUnitDriver();
+        browser.manage().timeouts()
+                .implicitlyWait(10, TimeUnit.SECONDS);
+    }
+
+    @AfterClass
+    public static void closeBrowser() {
+        browser.quit();
     }
 
     @Test
@@ -61,11 +65,6 @@ public class ServerWebTests {
 
         browser.findElementById("logout").submit();
         assertEquals(baseUrl + "/login?logout", browser.getCurrentUrl());
-    }
-
-    @AfterClass
-    public static void closeBrowser() {
-        browser.quit();
     }
 
 }
