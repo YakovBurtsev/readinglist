@@ -19,8 +19,8 @@ import java.util.List;
 @RequestMapping("/")
 public class ReadingListController {
 
-    private ReadingListRepository readingListRepository;
-    private AmazonProperties amazonProperties;
+    private final ReadingListRepository readingListRepository;
+    private final AmazonProperties amazonProperties;
 
     @Autowired
     public ReadingListController(ReadingListRepository readingListRepository, AmazonProperties amazonProperties) {
