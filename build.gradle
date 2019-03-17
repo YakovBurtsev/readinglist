@@ -18,7 +18,10 @@ apply plugin: 'io.spring.dependency-management'
 sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
-version = '1.0.0'
+jar {
+    archivesBaseName = 'readinglist'
+    version = '1.0.0'
+}
 
 repositories {
     mavenCentral()
