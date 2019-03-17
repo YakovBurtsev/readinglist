@@ -21,7 +21,6 @@ targetCompatibility = '1.8'
 jar {
     baseName = 'readinglist'
     version = '1.0.0'
-    archiveName = 'readinglist.jar'
 }
 
 repositories {
@@ -45,15 +44,5 @@ dependencies {
     testCompile 'org.seleniumhq.selenium:htmlunit-driver'
 }
 
-task stage(type: Copy, dependsOn: [clean, build]) {
-    from jar.archivePath
-    into project.rootDir
-    rename {
-        'readinglist.jar'
-    }
-}
-stage.mustRunAfter(clean)
-
-clean << {
-    project.file('readinglist.jar').delete()
+task stage(dependsOn: [build]) {
 }
