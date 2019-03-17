@@ -1,1 +1,1 @@
-web: java -jar build/libs/readinglist.jar
+web: java -jar readinglist.jar
