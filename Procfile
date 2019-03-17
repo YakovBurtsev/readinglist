@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -jar build/libs/readinglist.jar
+web: java -jar build/libs/readinglist.jar
