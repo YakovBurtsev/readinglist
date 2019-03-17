@@ -20,6 +20,10 @@ targetCompatibility = '1.8'
 
 version = '1.0.0'
 
+jar {
+    archivesBaseName = 'readinglist'
+}
+
 repositories {
     mavenCentral()
 }
