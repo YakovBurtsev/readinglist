@@ -4,6 +4,13 @@ amazon:
 spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
+  jpa:
+    open-in-view: false
+
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
 ---
 spring:
   profiles: production
@@ -21,4 +28,3 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-    open-in-view: false
