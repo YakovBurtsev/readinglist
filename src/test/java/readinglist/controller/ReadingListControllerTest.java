@@ -55,7 +55,7 @@ public class ReadingListControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(view().name("readingList"))
                 .andExpect(model().attribute("reader", equalTo(expectedReader)))
-                .andExpect(model().attribute("amazonID", "habuma-20"))
+                .andExpect(model().attribute("amazonID", "yaburtsev"))
                 .andExpect(model().attribute("books", is(empty())));
     }
 
@@ -89,7 +89,7 @@ public class ReadingListControllerTest {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("readingList"))
-                .andExpect(model().attribute("amazonID", "habuma-20"))
+                .andExpect(model().attribute("amazonID", "yaburtsev"))
                 .andExpect(model().attributeExists("books"))
                 .andExpect(model().attribute("books", hasSize(1)))
                 .andExpect(model().attribute("books", contains(equalTo(expectedBook))));
