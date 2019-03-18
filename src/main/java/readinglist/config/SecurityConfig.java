@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/").access("hasRole('READER')")
+                .antMatchers("/", "/delete/**").access("hasRole('READER')")
                 .antMatchers("/**").permitAll()
 
                 .and()
