@@ -13,7 +13,7 @@ management:
       show-details: "ALWAYS"
 ---
 spring:
-  profiles: cloud
+  profiles: production
   datasource:
     url: jdbc:postgresql://localhost:5432/readinglist
     username: postgres
