@@ -50,7 +50,6 @@ public class ReadingListController {
 
     @RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
     public String removeFromReadingList(@PathVariable Long id) {
-        System.out.println(id);
         readingListRepository.deleteById(id);
         return "redirect:/";
     }
@@ -65,6 +64,5 @@ public class ReadingListController {
     public String error() {
         return "error";
     }
-
 
 }
