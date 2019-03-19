@@ -27,7 +27,7 @@
             <span th:if="${book.description eq null}">No description available</span>
         </dd>
         <dd>
-            <form method="POST" th:action="@{'/delete/' + ${book.id}}">
+            <form th:method="DELETE" th:action="@{'/delete/' + ${book.id}}">
                 <input type="submit" value="Delete">
             </form>
         </dd>
@@ -50,7 +50,7 @@
     <input type="text" id="isbn" name="isbn" size="15"/><br/>
     <label for="description">Description:</label><br/>
     <textarea id="description" name="description" cols="80" rows="5"></textarea><br/>
-    <input type="submit"/>
+    <input type="submit" value="Submit"/>
 </form>
 
 </body>

@@ -48,7 +48,7 @@ public class ReadingListController {
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(path = "/delete/{id}", method = RequestMethod.DELETE)
     public String removeFromReadingList(@PathVariable Long id) {
         System.out.println(id);
         readingListRepository.deleteById(id);
